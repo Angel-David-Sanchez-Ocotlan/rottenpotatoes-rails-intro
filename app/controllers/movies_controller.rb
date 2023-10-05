@@ -12,8 +12,20 @@ class MoviesController < ApplicationController
 
 		#Which checkboxes to show as checked 
 		@ratings_to_show = params[:ratings].nil? ? @all_ratings : params[:ratings].keys
-	
-		@movies = Movie.with_ratings(@ratings_to_show) #Movie.all
+
+    #Conditionally render CSS styling of headers
+		@title_class = params[:column_selected] == 'title' ? "hilite bg-warning" : ""
+		@release_date_class = params[:column_selected] == 'release_date' ? "hilite bg-warning" : ""
+		
+		
+		#Filter by ratings 
+		@movies = Movie.with_ratings(@ratings_to_show)
+
+		#Sort by column if specified
+		if !params[:column_selected].nil?
+			@movies = @movies.order_by(params[:column_selected])
+		end
+
   end
 
   def new

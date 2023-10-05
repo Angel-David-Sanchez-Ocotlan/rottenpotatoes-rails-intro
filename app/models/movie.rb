@@ -8,4 +8,9 @@ class Movie < ActiveRecord::Base
 	def self.with_ratings(ratings_list)
 		return Movie.where(Rating:ratings_list)
 	end
+
+	def self.order_by(column_name)
+		return Movie.order(column_name)
+	end
+	
 end

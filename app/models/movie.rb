@@ -6,7 +6,7 @@ class Movie < ActiveRecord::Base
 
 	#Take in ratings and return filtered collection of Movies
 	def self.with_ratings(ratings_list)
-		return Movie.where(Rating:ratings_list)
+		return Movie.where(rating:ratings_list)
 	end
 
 	def self.order_by(column_name)

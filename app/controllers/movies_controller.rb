@@ -14,8 +14,9 @@ class MoviesController < ApplicationController
 		@ratings_to_show = params[:ratings].nil? ? @all_ratings : params[:ratings].keys
 
     #Conditionally render CSS styling of headers
-		@title_class = params[:column_selected] == 'title' ? "hilite bg-warning" : ""
-		@release_date_class = params[:column_selected] == 'release_date' ? "hilite bg-warning" : ""
+		@selected_column = params[:column_selected]
+		@title_class = @selected_column == 'title' ? "hilite bg-warning" : ""
+		@release_date_class = @selected_column == 'release_date' ? "hilite bg-warning" : ""
 		
 		
 		#Filter by ratings 

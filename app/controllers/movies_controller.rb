@@ -7,14 +7,26 @@ class MoviesController < ApplicationController
   end
 
   def index
+		#Remember user settings and adjust when user adds sorting/filters
+		session[:ratings] = params[:ratings].nil? ? session[:ratings] : params[:ratings]
+		session[:column_selected] = params[:column_selected].nil? ? session[:column_selected] : params[:column_selected]
+
 		#All ratings 
 		@all_ratings = Movie.all_ratings
 
-		#Which checkboxes to show as checked 
-		@ratings_to_show = params[:ratings].nil? ? @all_ratings : params[:ratings].keys
 
-    #Conditionally render CSS styling of headers
-		@selected_column = params[:column_selected]
+		#Set ratings filtering based on user input or session info - default to show all ratings
+		if params[:ratings].nil? 
+			@ratings_to_show = session[:ratings].nil? ? @all_ratings : session[:ratings].keys
+		else
+			@ratings_to_show = params[:ratings].keys
+		end
+
+
+		#Remember column selected form user input or session info
+		@selected_column = params[:column_selected].nil? ? session[:column_selected] : params[:column_selected]
+		
+		#Conditionally render CSS styling of headers
 		@title_class = @selected_column == 'title' ? "hilite bg-warning" : ""
 		@release_date_class = @selected_column == 'release_date' ? "hilite bg-warning" : ""
 		
